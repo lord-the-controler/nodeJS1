@@ -1,8 +1,6 @@
-import React from "react";
-
-const asyncHandler = (reqestHandler) => {
+const asyncHandler = (requestHandler) => {
     return (req,res,next)=>{
-        Promise.resolve(reqestHandler(req,res,next)).catch((err)=>{next(err)})
+        Promise.resolve(requestHandler(req,res,next)).catch((err)=>{next(err)})
     }
 }
 export { asyncHandler };
