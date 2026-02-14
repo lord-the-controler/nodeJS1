@@ -1,5 +1,5 @@
 class ApiError extends Error{
-    constructor(statusCode,message="Something went wrong!",stack=""){
+    constructor(statusCode=400,message="Something went wrong!",stack=""){
         super(message)
         this.statusCode=statusCode
         this.message=message
@@ -7,7 +7,7 @@ class ApiError extends Error{
         if (stack){
             this.stack=stack
         }else{
-            Error.stackTraceLimit(this,this.constructor)
+            Error.captureStackTrace(this,this.constructor)
         }
     }
 }
