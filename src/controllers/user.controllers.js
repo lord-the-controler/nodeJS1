@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { generateTokens } from "../utils/generateTokens.js";
+import { remove } from "../utils/removeFields.js";
 import { User } from "../models/user.models.js";
 import { options } from "../constants.js";
 import jwt from "jsonwebtoken";
