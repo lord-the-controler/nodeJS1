@@ -15,6 +15,13 @@ app.use(express.json({ limit: limit }));
 app.use(express.urlencoded({ extended: true, limit:limit }));
 app.use(express.static("public"))
 app.use(cookieParser())
+app.use((err, req, res, next) => {
+    console.log("REAL ERROR:", err);
+    res.status(err.statusCode || 500).json({
+        message: err.message,
+        stack: err.stack
+    });
+});
 
 //routes import
 import userRouter from "./routes/user.routes.js"
