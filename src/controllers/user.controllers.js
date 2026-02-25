@@ -46,7 +46,11 @@ const registerUser = asyncHandler(async (req, res) => {
     }
     // 5. Upload them to cloudinary, check for avatar once again
     const avatar = await uploadOnCloudinary(avatarLocalPath);
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    let coverImage;
+
+    if (coverImageLocalPath) {
+        coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    }
     if (!avatar) {
         throw new ApiError(400, "Avatar file is compulsory");
     }
@@ -475,7 +479,15 @@ const getUserWatchHistory = asyncHandler(async (req, res) => {
     console.log(user);
 
     // Return the response
-    return res.status(200).json(new ApiResponse(200,user[0].watchHistory,"Watch History Fetched Successfully"))
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                user[0].watchHistory,
+                "Watch History Fetched Successfully"
+            )
+        );
 });
 
 // Exports
@@ -492,5 +504,5 @@ export {
     updateUserCoverImage,
     // Getting Details
     getUserChannelProfile,
-    getUserWatchHistory
+    getUserWatchHistory,
 };
