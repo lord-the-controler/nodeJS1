@@ -5,6 +5,9 @@ import { limit } from "./constants.js";
 
 const app = express();
 
+app.use((err, req, res, next) => {
+    res.send(err);
+});
 app.use(
     cors({
         origin: process.env.CORS_ORIGIN,
@@ -12,14 +15,14 @@ app.use(
     })
 );
 app.use(express.json({ limit: limit }));
-app.use(express.urlencoded({ extended: true, limit:limit }));
-app.use(express.static("public"))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true, limit: limit }));
+app.use(express.static("public"));
+app.use(cookieParser());
 
 //routes import
-import userRouter from "./routes/user.routes.js"
+import userRouter from "./routes/user.routes.js";
 
 //routers declaration
-app.use("/api/v1/users",userRouter)
+app.use("/api/v1/users", userRouter);
 
 export { app };
