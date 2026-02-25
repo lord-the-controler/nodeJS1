@@ -10,19 +10,22 @@ cloudinary.config({
 const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null;
-        if (Array.isArray(localFilePath)) {
-            throw new Error("Expected file path string, got array");
-        }
+
         const response = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto",
         });
-        // console.log("File is uploaded on cloudinary", response.url);
-        fs.unlinkSync(localFilePath);
+
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
+
         return response;
+
     } catch (error) {
-        fs.unlinkSync(localFilePath);
-        return null;
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
+        throw error;
     }
 };
-
 export { uploadOnCloudinary };
