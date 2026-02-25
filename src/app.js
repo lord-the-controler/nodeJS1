@@ -5,9 +5,6 @@ import { limit } from "./constants.js";
 
 const app = express();
 
-app.use((err, req, res, next) => {
-    res.send(err);
-});
 app.use(
     cors({
         origin: process.env.CORS_ORIGIN,
@@ -24,5 +21,10 @@ import userRouter from "./routes/user.routes.js";
 
 //routers declaration
 app.use("/api/v1/users", userRouter);
+
+// Error Handler Middleware
+app.use((err, req, res, next) => {
+    res.send(err);
+});
 
 export { app };
